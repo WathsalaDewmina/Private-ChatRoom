@@ -2,8 +2,9 @@
 
 SecureChat is a robust and secure private chatroom application built using JavaScript, Python, Flask, HTML, and CSS. With a focus on privacy and user experience, SecureChat provides a seamless platform for private communication between individuals or groups.
 
-## How to Run
-(https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg)
+## Example ScreenShots
+<img src="demo_ss.png" alt="Demo Image" width="800">
+
 
 ### Prerequisites
 - [Python](https://www.python.org/) installed on your machine
