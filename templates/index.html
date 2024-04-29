@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SL Rangers</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            background: linear-gradient(135deg, #111, #333);
+        }
+
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: -1; 
+        }
+
+        .heading  {
+            color: #00ff00;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            background-color: black;
+            padding: 10px 30px;
+            border: 1px solid ;
+            border-radius: 10px;
+        }
+
+        .heading h1{
+            font-size: 2.5vh;
+        }
+
+        .heading p span{
+            color: red;
+            font-size: 2.5vh;
+        }
+
+        #username-section {
+            text-align: center;
+            background-color: black;
+            padding: 10px 35px;
+            border: 2px solid red;
+            border-radius: 10px;
+        }
+
+        #username-section h2{
+            font-size: 20px;
+
+        }
+
+        #username-form {
+            display: inline-block;
+        }
+
+        #username-input {
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #00ff00;
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+
+        #loading-icon {
+            display: none;
+        }
+
+        .lds-dual-ring {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+        }
+
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 46px;
+            height: 46px;
+            margin: 1px;
+            border-radius: 50%;
+            border: 5px solid #00ff00;
+            border-color: #00ff00 transparent #00ff00 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #chat-box {
+            display: none; /* Hide chat box initially */
+            border: 1px solid #00ff00;
+            background-color: #000;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            width: 90%;
+            max-width: 500px;
+            background-color: black;
+            padding: 15px 35px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+        }
+
+        #chat-messages {
+            overflow-y: scroll;
+            max-height: 240px;
+        }
+
+        #message-input {
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #00ff00;
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        
+        @media screen and (max-width: 768px) {
+            #chat-box {
+                width: 90%; 
+            }
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #login-panel{
+            padding: 10px 35px;
+            padding-bottom: 20px;
+            border: 2px solid #00ff00;
+            background-color: black;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        #login-panel h2{
+            font-size: 2.5vh;
+            text-align: center;
+        }
+
+        #password-input {
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #00ff00;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .login-button {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .login-button:hover {
+            background-color: #33ff33;
+        }
+    </style>
+</head>
+<body>
+    <div class="heading">
+        <h1>Welcome to ChatBox V1</h1>
+        <p>Made By : <span>[< Wathsala Dewmina >]</span></p>
+    </div>
+
+    <div id="login-panel">
+        <h2>Login</h2>
+        <input type="password" id="password-input" class="login-input" placeholder="Enter Password">
+        <button id="login-button" class="login-button">Login</button>
+    </div>
+
+    <div id="username-section" style="display: none;">
+        <h2>Enter Your Username</h2>
+        <form id="username-form">
+            <input type="text" id="username-input" placeholder="Your Username">
+            <button type="submit">Submit</button>
+            <div id="loading-icon" class="lds-dual-ring"></div>
+        </form>
+    </div>
+
+    <div id="chat-box" style="display: none;">
+        <div id="chat-messages"></div>
+        <input type="text" id="message-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="clearChat()">Clear Chat</button>
+    </div>
+
+    <script>
+        function getStoredUsername() {
+            return localStorage.getItem('username');
+        }
+
+        function setStoredUsername(username) {
+            localStorage.setItem('username', username);
+        }
+
+        function getUsername() {
+            let storedUsername = getStoredUsername();
+            return storedUsername;
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        let chatCleared = false;
+
+        function getMessages() {
+            if (!chatCleared) { // Fetch messages only if chat is not cleared
+                fetch('/get_messages')
+                    .then(response => response.json())
+                    .then(messages => {
+                        const chatMessages = document.getElementById('chat-messages');
+                        if (messages.length > 0) {
+                            chatMessages.innerHTML = ''; 
+                            messages.forEach(message => {
+                                const p = document.createElement('p');
+                                const usernameSpan = document.createElement('span');
+                                usernameSpan.style.color = getRandomColor(); 
+                                usernameSpan.textContent = `[${message.username}]:`;
+                                p.appendChild(usernameSpan);
+                                p.appendChild(document.createTextNode(` ${message.message}`));
+                                chatMessages.appendChild(p);
+                            });
+                            scrollToBottom(); 
+                            chatMessages.style.display = 'block'; 
+                        } else {
+                            chatMessages.innerHTML = ''; 
+                            chatMessages.style.display = 'none'; 
+                        }
+                    });
+            }
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = ''; // Clear the chat messages
+            chatMessages.style.display = 'none'; // Hide the chat messages
+            chatCleared = true; // Set flag to true when chat is cleared
+        }
+
+        function sendMessage() {
+            const username = getUsername();
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            messageInput.value = '';
+
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, message: message })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'OK') {
+                    chatCleared = false;
+                    getMessages(); 
+                }
+            });
+        }
+
+        document.getElementById('login-button').addEventListener('click', function() {
+            var password = document.getElementById('password-input').value;
+            if (password === 'encryptix') {
+                document.getElementById('login-panel').style.display = 'none';
+                document.getElementById('username-section').style.display = 'block';
+                getMessages();
+                setInterval(getMessages, 2000);
+            } else {
+                alert('Incorrect password! Please try again.');
+            }
+        });
+
+        document.getElementById('username-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username-input');
+            const username = usernameInput.value.trim();
+            if (username !== '') {
+                setStoredUsername(username);
+                document.getElementById('username-section').style.display = 'none';
+                document.getElementById('chat-box').style.display = 'block'; // Show the chat box
+            }
+        });
+
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+    <footer>
+        Copyright &copy;2024 S.A.W. Dewmina
+    </footer>
+</body>
+</html>
