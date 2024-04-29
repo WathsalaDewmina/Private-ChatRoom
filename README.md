@@ -44,6 +44,7 @@ SecureChat is a robust and secure private chatroom application built using JavaS
 
 5. **Access the Chatroom:**
     - Once the Flask server is running, open your web browser and go to [http://localhost:5000](http://localhost:5000) to access the SecureChat application.
+    - Password for the login is :- encryptix
 
 ## Contributing
 
